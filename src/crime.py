@@ -24,8 +24,6 @@ class CrimeDataFrame():
 
     def plot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
         cat_df = self.df[self.df[offense_category_id] == specific_category].copy()
-        # cat_df['month']=cat_df[first_offense_date].dt.month
-        # cat_df['year']=cat_df[first_offense_date].dt.year
         cat_df = cat_df.groupby(['year', 'month']).agg({incident_id: 'count'}).rename(columns={incident_id:'incident_count'}).reset_index()
         
         n =  max(cat_df.year) - min(cat_df.year) + 1
@@ -72,9 +70,22 @@ class CrimeDataFrame():
             plt.tight_layout()
             fig.savefig('../images/Denver_Boxswarm_By_Cat.png')
 
+    def kdeplots_by_cat(self, offense_category_id):
+        df = self.df[self.df.year != 2021].copy()
+        palette = sns.color_palette("rocket_r", as_cmap=True)
+        categories = df[offense_category_id].unique()
+        fig, axes = plt.subplots(len(categories), 1, figsize=(12, 3*len(categories)))
+        for category, ax in zip(categories, axes.flatten()):
+            gtmp = df[df[offense_category_id] == category].groupby(['year', 'week']).agg({'INCIDENT_ID':'count'}).rename(columns={'INCIDENT_ID': 'num_of_incidents'}).reset_index()
+            g = sns.kdeplot(data=gtmp, x='num_of_incidents', hue='year', fill=True, palette=palette, ax=ax)
+            g.set_title(f'KDE of the Number of {capitalize_titles(category)} Per Week')
+            g.set_xlabel(f'Number of {capitalize_titles(category)} Per Week')
+        plt.tight_layout()
+        fig.savefig('../images/Denver_KDEplots_By_Cat.png')
 
 if __name__ == '__main__':
     Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
     print(Denver.df.info())
-    Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    #Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
     #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID')
+    Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID')
