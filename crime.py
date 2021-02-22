@@ -52,6 +52,8 @@ class CrimeDataFrame():
         plt.tight_layout()
         fig.savefig(f'{city}_Crime_over_Time.png')     
 
+
+
 if __name__ == '__main__':
     Denver = CrimeDataFrame('denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'])
     print(Denver.df.info())
