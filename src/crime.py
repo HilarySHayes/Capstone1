@@ -16,6 +16,9 @@ class CrimeDataFrame():
         for col in dt_cols:
             self.df[col] = pd.to_datetime(self.df[col], format = format)
 
+    # def add_month_day_year(self, occ_col):
+    #         self.df[]
+
     def plot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
         cat_df = self.df[self.df[offense_category_id] == specific_category].copy()
         cat_df['month']=cat_df[first_offense_date].dt.month
@@ -52,9 +55,27 @@ class CrimeDataFrame():
         plt.tight_layout()
         fig.savefig(f'../images/{city}_Crime_over_Time.png')     
 
+    def boxplots_by_cat(self, offense_category_id):
+        box_df = self.df.copy()
+        box_df['year']=box_df.FIRST_OCCURRENCE_DATE.dt.year 
+        box_df['month']=box_df.FIRST_OCCURRENCE_DATE.dt.month   
+        box_df['week']=box_df.FIRST_OCCURRENCE_DATE.dt.week  
+        box_df = box_df[box_df.year!= 2021]
+
+        categories = box_df[offense_category_id].unique()
+        fig, axes = plt.subplots(len(categories), 1, figsize=(12, 3*len(categories)))
+        for category, ax in zip(categories, axes.flatten()):
+            gtmp = box_df[box_df[offense_category_id] == category].groupby(['year', 'week']).agg({'INCIDENT_ID':'count'}).rename(columns={'INCIDENT_ID': 'num_of_incidents'}).reset_index()
+            f = sns.boxplot(x='year', y='num_of_incidents', data=gtmp, boxprops=dict(alpha=0.25), ax=ax)
+            f = sns.swarmplot(x='year', y='num_of_incidents', data=gtmp, size=4, ax=ax)
+            f.set(xlabel='Year',ylabel='Number of Incidents Per Week')
+            f.set_title(f'Distribution of {capitalize_titles(category)} Per Week From 2016 - 2020')
+            plt.tight_layout()
+            fig.savefig('../images/Denver_Boxswarm_By_Cat.png')
 
 
 if __name__ == '__main__':
     Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p")
     print(Denver.df.info())
-    Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    #Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID')
