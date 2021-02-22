@@ -8,21 +8,24 @@ def capitalize_titles(string):
 
 class CrimeDataFrame():
 
-    def __init__(self, filename, dt_cols, format):
+    def __init__(self, filename, dt_cols, format, date_col):
         self.df = pd.read_csv(filename)
         self.convert_to_datetime(dt_cols, format)
+        self.add_month_day_year(date_col)
 
     def convert_to_datetime(self, dt_cols, format):
         for col in dt_cols:
             self.df[col] = pd.to_datetime(self.df[col], format = format)
 
-    # def add_month_day_year(self, occ_col):
-    #         self.df[]
+    def add_month_day_year(self, date_col):
+        self.df['year'] = self.df[date_col].dt.year
+        self.df['month'] = self.df[date_col].dt.month
+        self.df['week'] = self.df[date_col].dt.week
 
     def plot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
         cat_df = self.df[self.df[offense_category_id] == specific_category].copy()
-        cat_df['month']=cat_df[first_offense_date].dt.month
-        cat_df['year']=cat_df[first_offense_date].dt.year
+        # cat_df['month']=cat_df[first_offense_date].dt.month
+        # cat_df['year']=cat_df[first_offense_date].dt.year
         cat_df = cat_df.groupby(['year', 'month']).agg({incident_id: 'count'}).rename(columns={incident_id:'incident_count'}).reset_index()
         
         n =  max(cat_df.year) - min(cat_df.year) + 1
@@ -56,11 +59,7 @@ class CrimeDataFrame():
         fig.savefig(f'../images/{city}_Crime_over_Time.png')     
 
     def boxplots_by_cat(self, offense_category_id):
-        box_df = self.df.copy()
-        box_df['year']=box_df.FIRST_OCCURRENCE_DATE.dt.year 
-        box_df['month']=box_df.FIRST_OCCURRENCE_DATE.dt.month   
-        box_df['week']=box_df.FIRST_OCCURRENCE_DATE.dt.week  
-        box_df = box_df[box_df.year!= 2021]
+        box_df = self.df[self.df.year != 2021].copy()
 
         categories = box_df[offense_category_id].unique()
         fig, axes = plt.subplots(len(categories), 1, figsize=(12, 3*len(categories)))
@@ -75,7 +74,7 @@ class CrimeDataFrame():
 
 
 if __name__ == '__main__':
-    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p")
+    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
     print(Denver.df.info())
-    #Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
-    Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID')
+    Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID')
