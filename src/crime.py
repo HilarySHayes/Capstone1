@@ -8,13 +8,13 @@ def capitalize_titles(string):
 
 class CrimeDataFrame():
 
-    def __init__(self, filename, dt_cols):
+    def __init__(self, filename, dt_cols, format):
         self.df = pd.read_csv(filename)
-        self.convert_to_datetime(dt_cols)
+        self.convert_to_datetime(dt_cols, format)
 
-    def convert_to_datetime(self, dt_cols):
+    def convert_to_datetime(self, dt_cols, format):
         for col in dt_cols:
-            self.df[col] = pd.to_datetime(self.df[col])
+            self.df[col] = pd.to_datetime(self.df[col], format = format)
 
     def plot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
         cat_df = self.df[self.df[offense_category_id] == specific_category].copy()
@@ -50,11 +50,11 @@ class CrimeDataFrame():
             axes.flatten()[-1].axis('off')
         fig.suptitle(f'{city} Crime over Time', x=0.5, y=1.01, fontsize=35, fontweight='bold')
         plt.tight_layout()
-        fig.savefig(f'{city}_Crime_over_Time.png')     
+        fig.savefig(f'../images/{city}_Crime_over_Time.png')     
 
 
 
 if __name__ == '__main__':
-    Denver = CrimeDataFrame('denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'])
+    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p")
     print(Denver.df.info())
     Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
