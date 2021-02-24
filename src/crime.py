@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import folium_functions
 
 def capitalize_titles(string):
     return ' '.join([x.capitalize() for x in string.split('-')])
@@ -123,4 +124,7 @@ if __name__ == '__main__':
     #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID')
     #Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID')
     #Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
-    Denver.top_crime_neighborhoods(15, 'NEIGHBORHOOD_ID', 'Denver')
+    #Denver.top_crime_neighborhoods(15, 'NEIGHBORHOOD_ID', 'Denver')
+    categories = sorted(Denver.df.OFFENSE_CATEGORY_ID.unique())
+    categories.remove('sexual-assault')
+    folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
