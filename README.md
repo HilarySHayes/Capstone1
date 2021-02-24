@@ -15,15 +15,15 @@ Insert cloropleth map???
 
 Looking at a barchart showing how categories of crime have changed over time, the categories of traffic accidents, theft from motor vehicules, auto theft, and drug/alcohol crimes are noticeably different in 2020. 
 
-![Barplot of Crime in Denver By Crime Category](./images/DenverCrimeByCategoryBarplot.png)
+![Barplot of Crime in Denver By Crime Category](./images/Denver/DenverCrimeByCategoryBarplot.png)
 
-![Distribution of Auto Theft in Denver Over Time](./images/Denver_auto-theft_Over_Time.png)
+![Distribution of Auto Theft in Denver Over Time](./images/Denver/Denver_auto-theft_Over_Time.png)
 
-![Distribution of Traffic Accidents in Denver Over Time](./images/Denver_traffic-accident_Over_Time.png)
+![Distribution of Traffic Accidents in Denver Over Time](./images/Denver/Denver_traffic-accident_Over_Time.png)
 
-![Distribution of Theft From Motor Vehicles in Denver Over Time](./images/Denver_theft-from-motor-vehicle_Over_Time.png)
+![Distribution of Theft From Motor Vehicles in Denver Over Time](./images/Denver/Denver_theft-from-motor-vehicle_Over_Time.png)
 
-![Distribution of Aggravated Assault in Denver Over Time](./images/Denver_aggravated-assault_Over_Time.png)
+![Distribution of Aggravated Assault in Denver Over Time](./images/Denver/Denver_aggravated-assault_Over_Time.png)
 
 Include burglary or alcohol/drug?
 
@@ -32,7 +32,7 @@ Include burglary or alcohol/drug?
 
 Below are the 
 
-![Denver Neighborhoods Ranked by Crime Counts](./images/DenverTopNCrimeNeighborhoods.png)
+![Denver Neighborhoods Ranked by Crime Counts](./images/Denver/DenverTopNCrimeNeighborhoods.png)
 
 
 # Future directions

@@ -15,7 +15,7 @@ def make_layered_clustered_map(df, center, categories, offense_category_id, geo_
             offense_category_id: the name of the column that categorizes the offense
             geo_lat: the name of the column with the latitude coordinate
             geo_long: the name of the column with the longitude coordinate
-            city: the city 
+            city: the name of the city 
     """ 
     mapa = folium.Map(center, zoom_start=12)
     for category in categories:
