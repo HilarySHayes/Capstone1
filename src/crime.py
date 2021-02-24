@@ -23,12 +23,12 @@ class CrimeDataFrame():
         self.df['month'] = self.df[date_col].dt.month
         self.df['week'] = self.df[date_col].dt.week
 
-    def barplot_city_crime_by_category(self, offense_category_id, incident_id, city, palette):
+    def barplot_city_crime_by_category(self, offense_category_id, incident_id, city, palette = "tab10"):
         """ Barplot of # of incidents by category by yeear
             Args:
-                offense_category_id: the name of the column that categorizes the offense
-                incident_id: the name of the column where the incident identifier is 
-                city: the name of the city
+                offense_category_id: a string specifying the name of the column that categorizes the offense
+                incident_id: a string specifying the name of the column where the incident identifier is 
+                city: a string specifying the name of the city
                 palette: seaborn color palette for plot
         """
         fig, ax = plt.subplots(figsize=(18,10))
@@ -45,14 +45,14 @@ class CrimeDataFrame():
         plt.legend(fontsize='xx-large')
         fig.savefig(f'../images/{city}/{city}CrimeByCategoryBarplot.png')
 
-    def plot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
+    def lineplot_specific_category_over_time(self, ax, specific_category, offense_category_id, first_offense_date, incident_id):
         """ Lineplot of # of incidents per month over time for specified category
             Args:
                 ax: axis object
-                specific_category: the name of the specific offense category you are plotting over time
-                offense_category_id: the name of the column that categorizes the offense
-                first_offense_date: the name of the column where the date of first offense is
-                incident_id: the name of the column where the incident identifier is 
+                specific_category: a string specifying the name of the specific offense category you are plotting over time
+                offense_category_id: a string specifying the name of the column that categorizes the offense
+                first_offense_date: a string specifying the name of the column where the date of first offense is
+                incident_id: a string specifying the name of the column where the incident identifier is 
         """
         cat_df = self.df[self.df[offense_category_id] == specific_category].copy()
         cat_df = cat_df[cat_df.year != 2021]
@@ -76,19 +76,19 @@ class CrimeDataFrame():
         ax.yaxis.set_tick_params(labelsize=18)
         ax.legend(title='year')
 
-    def plot_all_cats_over_time(self, offense_category_id, first_offense_date, incident_id, city):
+    def lineplot_all_cats_over_time(self, offense_category_id, first_offense_date, incident_id, city):
         """ Lineplots of # of incidents per month over time by category
             Args:
-                offense_category_id: the name of the column that categorizes the offense
-                first_offense_date: the name of the column where the date of first offense is
-                incident_id: the name of the column where the incident identifier is 
-                city: the name of the city
+                offense_category_id: a string specifying the name of the column that categorizes the offense
+                first_offense_date: a string specifying the name of the column where the date of first offense is
+                incident_id: a string specifying the name of the column where the incident identifier is 
+                city: a string specifying the name of the city
         """
         categories = self.df[offense_category_id].unique()
         num_rows = int(np.ceil(len(categories)/2))
         fig, axes = plt.subplots(num_rows, 2, figsize=(18, num_rows*8))
         for category, ax in zip(categories, axes.flatten()):
-            self.plot_specific_category_over_time(ax, category, offense_category_id, first_offense_date, incident_id)
+            self.lineplot_specific_category_over_time(ax, category, offense_category_id, first_offense_date, incident_id)
         if len(categories) != num_rows * 2:
             axes.flatten()[-1].axis('off')
         fig.suptitle(f'{city} Crime over Time', x=0.5, y=1.01, fontsize=35, fontweight='bold')
@@ -96,11 +96,11 @@ class CrimeDataFrame():
         fig.savefig(f'../images/{city}/{city}_Crime_over_Time.png', bbox_inches='tight')     
 
     def boxplots_by_cat(self, offense_category_id, city):
-        """ Plots a swarmplot overlaying boxplot showing the distribution across time for each unique category 
-            in the columns passed as offense_category_id
+        """ Plots a swarmplot overlaying boxplot showing the distribution across time 
+            for each unique category in the columns passed as offense_category_id
             Args:
-                offense_category_id: the name of the column that categorizes the offense
-                city: the name of the city
+                offense_category_id: a string specifying the name of the column that categorizes the offense
+                city: a string specifying the name of the city
         """
         box_df = self.df[self.df.year != 2021].copy()
         categories = box_df[offense_category_id].unique()
@@ -118,8 +118,8 @@ class CrimeDataFrame():
         """ On the same graph, for each year, a kernel density estimate plot of the distribution of the number incidents for a category is plotted. 
             One such graph is generated for each unique category in the offense_category_id column.
             Args:
-                offense_category_id: the name of the column that categorizes the offense
-                city: the name of the city
+                offense_category_id: a string specifying the name of the column that categorizes the offense
+                city: a string specifying the name of the city
         """
         df = self.df[self.df.year != 2021].copy()
         palette = sns.color_palette("rocket_r", as_cmap=True)
@@ -136,9 +136,9 @@ class CrimeDataFrame():
     def top_crime_neighborhoods(self, n, neighborhood_id, city):
         """ A barchart of the top n neighborhoods ranked by highest crime counts
             Args:
-                n: the number of neighborhoods to include in plot
-                neighborhood_id: the name of the column identifying the neighborhood
-                city: the name of the city
+                n: an integer specifying the number of neighborhoods to include in plot
+                neighborhood_id: a string specifying the name of the column identifying the neighborhood
+                city: a string specigying the name of the city
         """
         fig, ax = plt.subplots(figsize=(9, max(n//3, 1)))
         tmp = self.df[(self.df.year != 2021) & (self.df[neighborhood_id] != 'cbd')]
@@ -154,6 +154,32 @@ class CrimeDataFrame():
         plt.tight_layout()
         fig.savefig(f'../images/{city}/{city}TopNCrimeNeighborhoods.png')
 
+    def double_plot(self, category, offense_category_id, first_offense_date, incident_id, city):
+        """ Two plots 
+                    - Left plot is a lineplot of # of incidents over time
+                    - Right plot is boxplot/swarmplot of the distribution # incidents over time
+            Args:
+                category: a string specifying the name of the category 
+                offense_category_id:  a string specifying the name of the column that categorizes the offense
+                first_offense_date: a string specifying the name of the column where the date of first offense is
+                city: a string specifying the name of the city
+        """
+        fig, axes = plt.subplots(1, 2, figsize=(16,6), sharey=True)
+        cat_gp = self.df[(self.df[offense_category_id] == category) & (self.df.year!=2021)].groupby(['year', 'month']).agg({incident_id:'count'}).rename(columns={incident_id: 'num_of_incidents'}).reset_index()
+        
+        self.lineplot_specific_category_over_time(axes[0], category, offense_category_id, first_offense_date, incident_id)
+        
+        #2nd Graph - Boxplot/swarmplot
+        colors = [plt.cm.bone(i) for i in np.linspace(0, 0.9, 5)][::-1]
+        colors.append('red')
+        f = sns.boxplot(x='year', y='num_of_incidents', data=cat_gp, boxprops=dict(alpha=0.25), ax=axes[1], palette = colors[1:])
+        f = sns.swarmplot(x='year', y='num_of_incidents', data=cat_gp, size=6, ax=axes[1], palette = colors[1:])
+        f.set_xlabel('Year', fontsize=18)
+        f.set_ylabel('', fontsize=18)
+        f.tick_params(labelsize=18)
+        f.axes.set_title(f"Distribution of Monthly {capitalize_titles(category)} Incidents",fontsize=18)
+        plt.tight_layout()
+        fig.savefig(f'../images/{city}/{city}_{category}_Over_Time.png')
 
 if __name__ == '__main__':
 
@@ -164,15 +190,17 @@ if __name__ == '__main__':
     """
     Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
     print(Denver.df.info())
-    #Denver.plot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
-    #Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
-    #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
-    #Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
+    Denver.lineplot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
+    Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
+    Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
     Denver.top_crime_neighborhoods(15, 'NEIGHBORHOOD_ID', 'Denver')
-    
-    #categories = sorted(Denver.df.OFFENSE_CATEGORY_ID.unique())
-    #categories.remove('sexual-assault')
-    #folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
+    categories = sorted(Denver.df.OFFENSE_CATEGORY_ID.unique())
+    for cat in categories:
+        Denver.double_plot(cat, 'OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+
+    categories.remove('sexual-assault')
+    folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
     
     
     """ Creates class with Seattle dataset attribute

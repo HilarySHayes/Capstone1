@@ -1,3 +1,5 @@
 denver_crime.csv
 .ipynb_checkpoints/
-./data
+data
+.DS_Store
+__pycache__/
