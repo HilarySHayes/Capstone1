@@ -188,19 +188,19 @@ if __name__ == '__main__':
         Makes folium cluster map By category for crime in Denver for 2020 
         Left for ease of generating graphics
     """
-    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
-    print(Denver.df.info())
-    Denver.lineplot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
-    Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
-    Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
-    Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
-    Denver.top_crime_neighborhoods(15, 'NEIGHBORHOOD_ID', 'Denver')
-    categories = sorted(Denver.df.OFFENSE_CATEGORY_ID.unique())
-    for cat in categories:
-        Denver.double_plot(cat, 'OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    #Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
+    #print(Denver.df.info())
+    #Denver.lineplot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
+    #Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
+    #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
+    #Denver.kdeplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
+    #Denver.top_crime_neighborhoods(15, 'NEIGHBORHOOD_ID', 'Denver')
+    #categories = sorted(Denver.df.OFFENSE_CATEGORY_ID.unique())
+    #for cat in categories:
+    #    Denver.double_plot(cat, 'OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
 
-    categories.remove('sexual-assault')
-    folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
+    #categories.remove('sexual-assault')
+    #folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
     
     
     """ Creates class with Seattle dataset attribute
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     #Seattle = CrimeDataFrame('../data/Seattle_crime.csv', ['Offense Start DateTime'], '%m/%d/%Y %I:%M:%S %p', 'Offense Start DateTime')
     
     #Seattle.top_crime_neighborhoods(10, 'MCPP', 'Seattle')
-
+    
     #tmp = Seattle.df[Seattle.df.year == 2020][['Latitude','Longitude','Offense Parent Group']].dropna(axis=0)
     #categories = sorted(tmp['Offense Parent Group'].unique())
     #folium_functions.make_layered_clustered_map(Seattle.df, [47.608013, -122.335167], categories, 'Offense Parent Group', 'Latitude', 'Longitude', 'Seattle')
