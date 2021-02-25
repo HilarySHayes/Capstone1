@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import folium_functions
+import choropleth_functions
 
 def capitalize_titles(string):
     return ' '.join([x.capitalize() for x in string.split('-')])
@@ -21,10 +22,10 @@ class CrimeDataFrame():
     def add_month_week_year(self, date_col):
         self.df['year'] = self.df[date_col].dt.year
         self.df['month'] = self.df[date_col].dt.month
-        self.df['week'] = self.df[date_col].dt.week
+        self.df['week'] = self.df[date_col].dt.isocalendar().week
 
     def barplot_city_crime_by_category(self, offense_category_id, incident_id, city, palette = "tab10"):
-        """ Barplot of # of incidents by category by yeear
+        """ Barplot of # of incidents by category by year
             Args:
                 offense_category_id: a string specifying the name of the column that categorizes the offense
                 incident_id: a string specifying the name of the column where the incident identifier is 
@@ -185,11 +186,12 @@ if __name__ == '__main__':
 
     """ Creates class with Denver dataset attribute
         Makes numerous plots
-        Makes folium cluster map By category for crime in Denver for 2020 
+        Makes folium cluster map by category for crime in Denver for 2020 
+        Makes choropleth maps for Denver for auto-theft in 2020 and 2019
         Left for ease of generating graphics
     """
-    #Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
-    #print(Denver.df.info())
+    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
+    print(Denver.df.info())
     #Denver.lineplot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
     #Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])    
     #Denver.boxplots_by_cat('OFFENSE_CATEGORY_ID', 'Denver')
@@ -201,7 +203,8 @@ if __name__ == '__main__':
 
     #categories.remove('sexual-assault')
     #folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
-    
+    choropleth_functions.choropleth_compare_two_years(Denver.df, 'auto-theft', 2020, 2019)
+
     
     """ Creates class with Seattle dataset attribute
         Makes top 10 crime neighborhoods plot
