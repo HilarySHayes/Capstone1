@@ -93,10 +93,9 @@ def choropleth_plot(data, myscale, category, years):
         legend_name=f'{category} in {years}'
     ).add_to(mapa)
 
-    style_function = lambda x: {'fillColor': '#ffffff',
-                                'color': '#000000',
-                                'fillOpacity': 0.1,
-                                'weight': 0.1}
+    def style_function(x):
+        return {'fillColor': '#ffffff', 'color': '#000000',
+                'fillOpacity': 0.1, 'weight': 0.1}
 
     hover_feature = folium.features.GeoJson(
         data,
@@ -126,7 +125,7 @@ def choropleth_compare_two_years(denver_crime_df, category, year1, year2):
     year1_data = count_by_category_and_year(geo_df, shape_df, category, [year1])
     year2_data = count_by_category_and_year(geo_df, shape_df, category, [year2])
 
-    myscale = (pd.concat([year1_data, year2_data]).Count.quantile((0,0.3, 0.8, 0.965 ,1))).tolist()
+    myscale = (pd.concat([year1_data, year2_data]).Count.quantile((0, 0.3, 0.8, 0.965, 1))).tolist()
 
     m1 = choropleth_plot(year1_data, myscale, category, [year1])
     m2 = choropleth_plot(year2_data, myscale, category, [year2])

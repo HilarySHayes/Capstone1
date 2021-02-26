@@ -240,7 +240,7 @@ if __name__ == '__main__':
         Makes choropleth maps for Denver for auto-theft in 2020 and 2019
         Left for ease of generating graphics
     """
-    Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
+    # Denver = CrimeDataFrame('../data/denver_crime.csv', ['FIRST_OCCURRENCE_DATE', 'LAST_OCCURRENCE_DATE', 'REPORTED_DATE'], "%m/%d/%Y %I:%M:%S %p", 'FIRST_OCCURRENCE_DATE')
 
     # Denver.lineplot_all_cats_over_time('OFFENSE_CATEGORY_ID','FIRST_OCCURRENCE_DATE', 'INCIDENT_ID', 'Denver')
     # Denver.barplot_city_crime_by_category('OFFENSE_CATEGORY_ID', 'INCIDENT_ID', 'Denver', ["#1D3557","#457B9D","#A8DADC","#F3C6C6","#E63946"])
@@ -253,7 +253,7 @@ if __name__ == '__main__':
 
     # categories.remove('sexual-assault')
     # folium_functions.make_layered_clustered_map(Denver.df, [39.7177, -104.9208], categories, 'OFFENSE_CATEGORY_ID', 'GEO_LAT', 'GEO_LON', 'Denver')
-    choropleth_functions.choropleth_compare_two_years(Denver.df, 'auto-theft', 2020, 2019)
+    # choropleth_functions.choropleth_compare_two_years(Denver.df, 'auto-theft', 2020, 2019)
 
     """ Creates class with Seattle dataset attribute
         Makes top 10 crime neighborhoods plot
