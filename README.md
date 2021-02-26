@@ -8,7 +8,7 @@ the distribution of crimes, where they are occuring and being able to adapt to c
 ## Data
 
 I obtained the last five years of criminal offenses in the City and County of Denver, Colorado, which is based on the National Incident Based Reporting Systems (NIBRS) and is publicly available online [here](https://www.denvergov.org/opendata/dataset/city-and-county-of-denver-crime).
- The data includes more than 451,400 reported crimes from 2016-2020. Each crime is classified by offense type and includes the date of first occurrence as well as the reporting date. Most reported crimes also include the neighborhood and geographical location coordinates. Below are features included in the dataset. Highlighted are the features I primarily used. I also added year, month, and week number features using the date of first occurrence. In accordance with legal protections against identifying sexual assault victims, addresses are not included. Child abuse cases and all crimes involving juveniles are also not reported in this dataset. In August 2020, the Stapleton neighborhood changed its name to Central Park; The new name, Central Park, was replaced in all previous years for consistency. 
+ The data includes more than 451,400 reported crimes from 2016-2020. Each crime is classified by offense type and includes the date of first occurrence as well as the reporting date. Most reported crimes also include the neighborhood and geographical location coordinates. Below are features included in the dataset and highlighted are the features I focused on. I also added year, month, and week number features using the date of first occurrence. In accordance with legal protections against identifying sexual assault victims, addresses are not included. Child abuse cases and all crimes involving juveniles are also not reported in this dataset. In August 2020, the Stapleton neighborhood changed its name to Central Park; The new name, Central Park, was replaced in all previous years for consistency. 
 
 <p align="center">
 <img src="./images/Denver/data_features.png" width="175" style="border:0px;margin:20px">
@@ -41,7 +41,7 @@ The number of traffic accidents decreased last year.  In the figure below, we ca
 <img src="./images/Denver/Denver_traffic-accident_Over_Time.png" width="800">
 </p>
 
-Reviewing theft from motor vehicles we also see an upward trend over 2020. In this instance, there has been an upward trend that appears to level off during 2019, before increasing significantly again in 2020.  March and April appear to be the point at where the increase begins.  Like the other two figures, the box-plot on the right shows the distribution over the year for all 5 years and highlights the notable difference in 2020. 
+Reviewing theft from motor vehicles we also see an upward trend over 2020. In this instance, there has been an upward trend that appears to level off during 2019, before increasing significantly again in 2020.  March and April appear to be the point at where the increase begins.  Like the other two figures, the boxplot on the right shows the distribution over the year for all 5 years and highlights the notable difference in 2020. 
 
 <p align="center">
 <img src="./images/Denver/Denver_theft-from-motor-vehicle_Over_Time.png" width="800">
@@ -56,7 +56,7 @@ While the number of aggravated assaults seem to be trending upward over the last
 ## Where do most crimes occur?
 
 This section focuses where crimes are occurring and provides useful interactive graphics to explore how this is changing between years.
-First, when grouping by neighborhood, we can see the top 15 neighborhoods where crimes occur accounts for 41% of all crimes.  In other words, the top 19% of the neighborhoods only account for 41% of total crime. The top 15 neighborhoods account for about 23% of the area of the City and County of Denver. 
+First, when grouping by neighborhood, we can see the top 15 neighborhoods where crimes occur accounts for 41% of all crimes.  In other words, the top 19% of the neighborhoods only account for 41% of total crime. The top 15 neighborhoods account for about 23% of the area of the City and County of Denver based on area calculations from the geometry of the shape file data.
 
 Note: Central Park was formerly known as Stapleton and, as previously mentioned, for the purposed of the analysis it was renamed for all years. 
 
