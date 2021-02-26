@@ -4,10 +4,18 @@ from crime import capitalize_titles
 
 
 def crime_marking(x, marker_cluster):
-    folium.Circle(location = [x[0], x[1]]).add_to(marker_cluster)
+    """ Creates a circle in the folium marker_cluster passed
+        as an argument at the [latitude, longitude] passed
+        as x.
+    Args:
+        x: a list of [latitude, longitude]
+        marker_cluster: folium marker_cluster you will add to
+    """
+    folium.Circle(location=[x[0], x[1]]).add_to(marker_cluster)
+
 
 def make_layered_clustered_map(df, center, categories, offense_category_id, geo_lat, geo_lon, city):
-    """ Makes an html Folium map with layers for each category 
+    """ Makes an html Folium map with layers for each category
         Args:
             df: pandas dataframe
             center: [latitude, longitude] for the center of the map
@@ -15,8 +23,9 @@ def make_layered_clustered_map(df, center, categories, offense_category_id, geo_
             offense_category_id: the name of the column that categorizes the offense
             geo_lat: the name of the column with the latitude coordinate
             geo_long: the name of the column with the longitude coordinate
-            city: the name of the city 
-    """ 
+            city: the name of the city
+    """
+
     mapa = folium.Map(center, zoom_start=12)
     for category in categories:
         fg = folium.FeatureGroup(name=capitalize_titles(category), show=False)
@@ -27,5 +36,3 @@ def make_layered_clustered_map(df, center, categories, offense_category_id, geo_
     folium.TileLayer('openstreetmap').add_to(mapa)
     folium.LayerControl().add_to(mapa)
     mapa.save(f'../html/{city}clustermap.html')
-
-    
