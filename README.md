@@ -27,22 +27,36 @@ The number of traffic accidents decreased last year.  In the figure below, we ca
 
 Reviewing theft from motor vehicles we also see an upward trend over 2020. In this instance, there has been a upward trend that appears to level off during 2019, before increasing significantly again in 2020.  March and April appear to be the point at where the increase begins.  Like the other two figures, the box-plot on the right shows the distribution over the year for all 5 years and highlights the notable difference in 2020. 
 
-![Distribution of Theft From Motor Vehicles in Denver Over Time](./images/Denver/Denver_theft-from-motor-vehicle_Over_Time.png)
+<p align="center">
+<img src="./images/Denver/Denver_theft-from-motor-vehicle_Over_Time.png" width="500">
+</p>
 
 While the number of aggravated assaults seem to be trending upward over the last few years, there is a cyclical pattern with more incidents occuring in the summer. 
 
-![Distribution of Aggravated Assault in Denver Over Time](./images/Denver/Denver_aggravated-assault_Over_Time.png)
+<p align="center">
+<img src="./images/Denver/Denver_aggravated-assault_Over_Time" width="500">
+</p>
 
 ## Where do most crimes occur?
 
 Grouping by neighborhood, we can see the top 15 neighborhoods where crimes occur. Central Park, was formerly known as Stapleton and, as previously mentioned, for the purposed of the analysis it was renamed for all years. 
 
-![Denver Neighborhoods Ranked by Crime Counts](./images/Denver/DenverTopNCrimeNeighborhoods.png)
+<p align="center">
+<img src="./images/Denver/DenverTopNCrimeNeighborhoods.png" width="500">
+</p>
 
 In order to be able to drill down for a close up on crime in Denver neighborhoods, I made a folium map with different crime categories as layers.  The map includes only crimes from 2020.  Due to the large number of incidents I used clusters to allow for easier viewing. Below is a gif of the map. An html file containing the map is located in the html folder of this repo and can be downloaded and run from your local machine. There are 622 incidents from 2020 in the dataset that are not represented geographically on the map. All but one are sexual crimes for which location data is withheld.
 
-![Gif of a layered folium map of Denver for crime in 2020](./images/Denver/Map_Demos.gif)
+<p align="center">
+<img src="./images/Denver/Map_Demos.gif" width="500">
+</p>
 
+In order to be able to see changes in time across neighborhoods for specific categories, I made a function that creates a folium choropleth.  Below you can see the difference neighborhood by neighborhood for auto-theft incidents in 2019 and in 2020. While these static maps offer an insight into the changes 
+
+<p align="center">
+<img src="./images/Denver/auto-theft2019.png" width="500">
+<img src="./images/Denver/auto-theft2020.png" width="500">
+</p>
 
 # Future directions
 
