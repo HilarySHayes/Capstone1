@@ -14,16 +14,21 @@ I obtained the last five years of criminal offenses in the City and County of De
 
 One of my first goals after preparing the dataframe was to assess if crime in Denver had changed in 2020. To examine this question, I plotted the number of incidents for each of the major crime categories in the dataset by year. Looking at the figure below, there is a considerable decline in traffic accidents and drug/alcohol incidents in 2020. There also is an increase in theft from motor vehicles and auto theft in 2020.
 
-
-![Barplot of Crime in Denver By Crime Category](./images/Denver/DenverCrimeByCategoryBarplot.png)
+<p align="center">
+<img src="./images/Denver/DenverCrimeByCategoryBarplot.png" width="700">
+</p>
 
 To further investigate the changes in auto theft, I plotted the total number of incidents by year, and for each month over time.  The red line represents the year 2020 and there is a considerable increase in auto theft incidents that starts around March, when the severity of COVID-19 was just being realized in the US.  The box plot on the right shows just how much this has increased compared to other years.
 
-![Distribution of Auto Theft in Denver Over Time](./images/Denver/Denver_auto-theft_Over_Time.png)
+<p align="center">
+<img src="./images/Denver/Denver_auto-theft_Over_Time.png" width="800">
+</p>
 
 The number of traffic accidents decreased last year.  In the figure below, we can observe a sharp drop as Covid measures were enacted and more people were staying home. Over time the number of accidents increased but it remained well below its previous levels. More people working from home is likely contributing to this change.  The far-right box plot shows the extent of this change when compared with other years.
 
-![Distribution of Traffic Accidents in Denver Over Time](./images/Denver/Denver_traffic-accident_Over_Time.png)
+<p align="center">
+<img src="./images/Denver/Denver_traffic-accident_Over_Time.png" width="800">
+</p>
 
 Reviewing theft from motor vehicles we also see an upward trend over 2020. In this instance, there has been a upward trend that appears to level off during 2019, before increasing significantly again in 2020.  March and April appear to be the point at where the increase begins.  Like the other two figures, the box-plot on the right shows the distribution over the year for all 5 years and highlights the notable difference in 2020. 
 
@@ -54,8 +59,8 @@ In order to be able to drill down for a close up on crime in Denver neighborhood
 In order to be able to see changes in time across neighborhoods for specific categories, I made a function that creates a folium choropleth.  Below you can see the difference neighborhood by neighborhood for auto-theft incidents in 2019 and in 2020. While these static maps offer an insight into the changes 
 
 <p align="center">
-<img src="./images/Denver/auto-theft2019.png" width="300">
-<img src="./images/Denver/auto-theft2020.png" width="300">
+<img src="./images/Denver/auto-theft2019.png" width="400">
+<img src="./images/Denver/auto-theft2020.png" width="400">
 </p>
 
 # Future directions
